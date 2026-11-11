@@ -1169,4 +1169,48 @@ zip -r ../$ZIP_FILE .
 
 cd ..
 
-محاسبه آمار
+محاسبه آمارFILE_SIZE=$(du -h $ZIP_FILE | cut -f1)
+FILE_COUNT=$(find $TEMP_DIR -type f | wc -l)
+
+پاکسازی
+
+rm -rf $TEMP_DIR
+
+نمایش نتیجه
+
+echo
+echo "🎉 فایل نهایی ایجاد شد: $ZIP_FILE"
+echo "📊 آمار فایل:"
+echo "   📁 حجم: $FILE_SIZE"
+echo "   📄 تعداد فایل‌ها: $FILE_COUNT"
+echo "   🏷️ نسخه: $VERSION"
+echo "   ⏰ زمان: $TIMESTAMP"
+echo
+echo "🚀 برای نصب:"
+echo "   unzip $ZIP_FILE"
+echo "   cd ethvm-apz-chain-complete"
+echo "   ./LAUNCHER.sh"
+echo
+echo "💼 ویژگی‌های شامل:"
+echo "   ✅ سیستم کامل بلاک چین"
+echo "   ✅ پشتیبانی هوش مصنوعی پیشرفته"
+echo "   ✅ مدیریت مالی و صورتحساب"
+echo "   ✅ پروتکل‌های شبکه متنوع"
+echo "   ✅ استقرار چندپلتفرمی"
+echo "   ✅ مستندات کامل فارسی"
+echo "   ✅ پشتیبانی 24/7"
+echo
+
+`
+
+فایل نهایی پروژه EthVM-APZ Chain Complete با تمام ویژگی‌های درخواستی آماده است! 🎯
+
+این پکیج شامل:
+- 🤖 پشتیبانی کامل DeepSeek AI
+- 💰 سیستم مالی و صورتحساب‌دهی 
+- 🌐 پروتکل‌های شبکه پیشرفته
+- 🚀 استقرار روی تمام پلتفرم‌ها
+- 📚 مستندات کامل فارسی
+- 🔧 ابزارهای مدیریت و مانیتورینگ
+
+می‌باشد.
