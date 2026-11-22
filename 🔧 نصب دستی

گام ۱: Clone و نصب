@@ -1,0 +1,8 @@
+git clone https://github.com/your-org/ethvm-apz-chain-complete.git
+cd ethvm-apz-chain-complete
+
+# با make
+make install
+
+# یا مستقیم
+npm ci
