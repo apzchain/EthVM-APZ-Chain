@@ -1,0 +1,101 @@
+version: '3.8'
+
+services:
+  # هسته اصلی
+  core:
+    build:
+      context: ../../core-system
+      dockerfile: deployment/docker/Dockerfile.core
+    environment:
+      - NODE_ENV=production
+      - BLOCKCHAIN_NETWORK=mainnet
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+    ports:
+      - "8080:8080"
+      - "8545:8545"   # RPC
+      - "30303:30303" # P2P
+    volumes:
+      - core-data:/var/lib/apz
+      - ./configs:/app/configs
+    networks:
+      - apz-network
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+
+  # پشتیبانی هوش مصنوعی
+  ai-support:
+    build:
+      context: ../../ai-support-system
+      dockerfile: deployment/docker/Dockerfile.ai
+    environment:
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - FINANCIAL_MANAGEMENT=true
+      - LEGAL_COMPLIANCE=true
+    ports:
+      - "8081:8080"
+    depends_on:
+      - core
+    networks:
+      - apz-network
+    restart: unless-stopped
+
+  # مانیتورینگ
+  monitoring:
+    image: prom/prometheus:latest
+    volumes:
+      - ../../monitoring-analytics/real-time-monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - apz-network
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ../../monitoring-analytics/real-time-monitoring/grafana-dashboard.json:/etc/grafana/provisioning/dashboards/dashboard.json
+    ports:
+      - "3000:3000"
+    networks:
+      - apz-network
+
+  # دیتابیس
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: apz_chain
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-securepassword}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - apz-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d apz_chain"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    networks:
+      - apz-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 3s
+      retries: 5
+
+networks:
+  apz-network:
+    driver: bridge
+
+volumes:
+  core-data:
+  postgres-data:
+  redis-data:
