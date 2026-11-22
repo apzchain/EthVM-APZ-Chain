@@ -1,0 +1,123 @@
+// موتور پشتیبانی هوش مصنوعی با DeepSeek
+import { DeepSeekClient } from '@deepseek/sdk';
+
+export class AISupportEngine {
+    private client: DeepSeekClient;
+    private contextMemory: Map<string, ConversationContext> = new Map();
+
+    constructor(apiKey: string) {
+        this.client = new DeepSeekClient({
+            apiKey,
+            model: 'deepseek-chat',
+            temperature: 0.7,
+            maxTokens: 4000
+        });
+    }
+
+    async handleQuery(userId: string, message: string): Promise<string> {
+        // بازیابی زمینه گفتگو
+        let context = this.contextMemory.get(userId) || {
+            history: [],
+            topic: null,
+            pendingInvoice: null
+        };
+
+        // افزودن پیام به تاریخچه
+        context.history.push({ role: 'user', content: message });
+
+        // تشخیص قصد و موضوع
+        const intent = await this.detectIntent(message);
+        context.topic = intent;
+
+        // پردازش بر اساس نوع درخواست
+        let response = '';
+        switch (intent) {
+            case 'invoice':
+                response = await this.generateInvoiceResponse(context, message);
+                break;
+            case 'protocol_setup':
+                response = await this.generateProtocolGuide(message);
+                break;
+            case 'financial_advice':
+                response = await this.generateFinancialAdvice(message);
+                break;
+            case 'technical_support':
+                response = await this.generateTechnicalSupport(message);
+                break;
+            default:
+                response = await this.generateGeneralResponse(message);
+        }
+
+        // ذخیره پاسخ
+        context.history.push({ role: 'assistant', content: response });
+        this.contextMemory.set(userId, context);
+
+        return response;
+    }
+
+    private async detectIntent(message: string): Promise<string> {
+        const prompt = `Detect the intent of this user message. Possible intents: invoice, protocol_setup, financial_advice, technical_support, general. Message: "${message}"`;
+        const result = await this.client.complete(prompt);
+        return result.trim().toLowerCase();
+    }
+
+    private async generateInvoiceResponse(context: ConversationContext, message: string): Promise<string> {
+        // تولید صورتحساب با کمک AI
+        const prompt = `User wants to generate an invoice. Context: ${JSON.stringify(context)}. Message: "${message}". Generate a professional invoice response with amount, due date, and payment instructions.`;
+        const result = await this.client.complete(prompt);
+        return result;
+    }
+
+    private async generateProtocolGuide(message: string): Promise<string> {
+        // راهنمای گام‌به‌گام برای راه‌اندازی پروتکل
+        const prompt = `User needs help with network protocol setup: "${message}". Provide step-by-step instructions for IPX, tunneling, or crypto protocol setup. Include commands and configs.`;
+        const result = await this.client.complete(prompt);
+        return result;
+    }
+
+    private async generateFinancialAdvice(message: string): Promise<string> {
+        const prompt = `User needs financial advice: "${message}". Provide insights on cost optimization, budget allocation, or ROI analysis for blockchain projects.`;
+        const result = await this.client.complete(prompt);
+        return result;
+    }
+
+    private async generateTechnicalSupport(message: string): Promise<string> {
+        const prompt = `User has a technical issue: "${message}". Troubleshoot common problems with EthVM-APZ Chain. Suggest solutions and debugging steps.`;
+        const result = await this.client.complete(prompt);
+        return result;
+    }
+
+    private async generateGeneralResponse(message: string): Promise<string> {
+        const prompt = `User says: "${message}". Respond helpfully and professionally about the EthVM-APZ Chain project.`;
+        const result = await this.client.complete(prompt);
+        return result;
+    }
+
+    // سیستم صدور صورت‌حساب خودکار با تأیید AI
+    async generateSmartInvoice(userId: string, serviceData: any): Promise<any> {
+        // تحلیل هزینه‌ها با DeepSeek
+        const analysisPrompt = `Analyze this service usage and generate a fair invoice: ${JSON.stringify(serviceData)}. Include breakdown of costs and suggest payment terms.`;
+        const analysis = await this.client.complete(analysisPrompt);
+        
+        // ایجاد صورت‌حساب نهایی
+        const invoice = {
+            id: `INV-${Date.now()}`,
+            userId,
+            items: serviceData.items,
+            total: serviceData.totalCost,
+            currency: 'USD',
+            dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+            status: 'pending',
+            aiAnalysis: analysis,
+            generatedAt: new Date().toISOString()
+        };
+
+        return invoice;
+    }
+}
+
+interface ConversationContext {
+    history: { role: string; content: string }[];
+    topic: string | null;
+    pendingInvoice: any | null;
+}
