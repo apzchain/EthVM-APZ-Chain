@@ -654,7 +654,7 @@ curl https://api.deepseek.com/v1/models \
 4. Push کنید: git push origin feature/amazing
 5. Pull Request باز کنید
 
-راهنمای کامل: CONTRIBUTING.md
+https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badgeراهنمای کامل: CONTRIBUTING.md
 
 ---
 
