@@ -1,0 +1,100 @@
+ethvm-apz-chain-complete-20241210-1500.zip/
+├── 📁 core-system/                    # هسته اصلی پروژه
+│   ├── 📁 network-protocols/          # پروتکل‌های شبکه
+│   │   ├── ipx-adapter.ts
+│   │   ├── secure-tunnel.ts
+│   │   ├── crypto-engine.ts
+│   │   ├── isdn-integration.ts
+│   │   └── frame-relay.ts
+│   ├── 📁 cross-chain-bridge/         # پل بین‌زنجیره‌ای
+│   │   ├── bridge-protocol.ts
+│   │   ├── packet-exchange.ts
+│   │   └── multi-chain-orchestrator.ts
+│   ├── 📁 blockchain-core/            # هسته بلاک چین
+│   │   ├── consensus.ts
+│   │   ├── node-manager.ts
+│   │   ├── transaction-pool.ts
+│   │   └── chain-state.ts
+│   └── 📁 smart-contracts/            # قراردادهای هوشمند
+│       ├── APZToken.sol
+│       ├── Staking.sol
+│       └── Governance.sol
+├── 📁 ai-support-system/              # پشتیبانی هوش مصنوعی
+│   ├── 📁 deepseek-integration/       # یکپارچه‌سازی DeepSeek
+│   │   ├── support-engine.ts
+│   │   ├── ai-functions.ts
+│   │   └── model-training.ts
+│   ├── 📁 financial-management/       # مدیریت مالی
+│   │   ├── financial-authorizer.ts
+│   │   ├── invoice-manager.ts
+│   │   └── payment-processor.ts
+│   ├── 📁 legal-compliance/           # تطبیق قانونی
+│   │   ├── legal-validator.ts
+│   │   ├── contract-generator.ts
+│   │   └── compliance-checker.ts
+│   ├── 📁 customer-support/           # پشتیبانی مشتری
+│   │   ├── ticket-system.ts
+│   │   ├── live-chat.ts
+│   │   └── knowledge-base.ts
+│   └── 📁 billing-system/             # سیستم صورتحساب
+│       ├── smart-invoice.ts
+│       ├── subscription-manager.ts
+│       └── tax-calculator.ts
+├── 📁 deployment/                     # استقرار و نصب
+│   ├── 📁 docker/                     # کانفیگ Docker
+│   │   ├── Dockerfile.core
+│   │   ├── Dockerfile.ai
+│   │   └── docker-compose.yml
+│   ├── 📁 kubernetes/                 # استقرار Kubernetes
+│   │   ├── deployment.yaml
+│   │   ├── service.yaml
+│   │   └── ingress.yaml
+│   ├── 📁 cloud/                      # استقرار ابری
+│   │   ├── aws-setup.sh
+│   │   ├── gcp-setup.sh
+│   │   └── azure-setup.sh
+│   └── 📁 on-premise/                 # استقرار داخلی
+│       ├── install.sh
+│       └── config.env
+├── 📁 monitoring-analytics/           # مانیتورینگ و تحلیل
+│   ├── 📁 real-time-monitoring/       # مانیتورینگ لحظه‌ای
+│   │   ├── prometheus.yml
+│   │   └── grafana-dashboard.json
+│   ├── 📁 performance-analytics/      # تحلیل عملکرد
+│   │   ├── metrics-collector.ts
+│   │   └── reporting.ts
+│   ├── 📁 security-monitoring/        # مانیتورینگ امنیتی
+│   │   ├── intrusion-detection.ts
+│   │   └── audit-log.ts
+│   └── 📁 business-intelligence/      # هوش تجاری
+│       ├── dashboards.ts
+│       └── insights-engine.ts
+├── 📁 documentation/                  # مستندات کامل
+│   ├── 📁 user-guides/                # راهنماهای کاربری
+│   │   ├── getting-started.md
+│   │   ├── network-setup.md
+│   │   └── advanced-features.md
+│   ├── 📁 technical-docs/             # مستندات فنی
+│   │   ├── architecture.md
+│   │   ├── api-reference.md
+│   │   └── developer-guide.md
+│   ├── 📁 api-reference/              # مرجع API
+│   │   ├── rest-api.yaml
+│   │   └── websocket-api.md
+│   └── 📁 troubleshooting/            # عیب‌یابی
+│       ├── common-issues.md
+│       └── faq.md
+├── 📁 tools-utilities/                # ابزارهای کمکی
+│   ├── 📁 setup-wizard/               # جادوگر نصب
+│   │   ├── wizard-cli.ts
+│   │   └── steps.json
+│   ├── 📁 config-generator/           # تولیدکننده پیکربندی
+│   │   ├── config-builder.ts
+│   │   └── templates/
+│   ├── 📁 migration-tools/            # ابزارهای انتقال
+│   │   ├── data-migrator.ts
+│   │   └── schema-validator.ts
+│   └── 📁 backup-recovery/            # پشتیبان‌گیری و بازیابی
+│       ├── backup-scheduler.ts
+│       └── restore-manager.ts
+└── 🎯 LAUNCHER.sh                     # راه‌انداز اصلی
