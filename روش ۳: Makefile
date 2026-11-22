@@ -1,0 +1,5 @@
+# کل چرخه
+make setup    # نصب + پیکربندی
+make docker-up  # اجرا
+make test     # تست
+make health   # بررسی سلامت
