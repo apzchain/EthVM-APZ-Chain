@@ -1,0 +1,9 @@
+# 1. تنظیم environment
+cp .env.example .env
+nano .env  # ویرایش کلیدها
+
+# 2. اجرا
+docker-compose -f deployment/docker/docker-compose.yml up -d
+
+# 3. بررسی
+./scripts/health-check.sh
