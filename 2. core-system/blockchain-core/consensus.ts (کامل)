@@ -1,0 +1,93 @@
+// الگوریتم اجماع ترکیبی (PoS + PoA)
+export class ConsensusEngine {
+    private validators: Map<string, Validator> = new Map();
+    private currentRound: number = 0;
+    private blockTime: number = 5000; // 5 seconds
+
+    constructor(private config: ConsensusConfig) {
+        this.loadValidators(config.initialValidators);
+    }
+
+    async proposeBlock(transactions: Transaction[]): Promise<Block> {
+        const proposer = this.selectProposer();
+        const block: Block = {
+            number: this.currentRound,
+            timestamp: Date.now(),
+            proposer: proposer.address,
+            transactions,
+            parentHash: await this.getLastBlockHash(),
+            signature: await this.signBlock(proposer, transactions)
+        };
+
+        // ارسال بلاک برای رأی‌گیری
+        await this.broadcastForVoting(block);
+        return block;
+    }
+
+    private selectProposer(): Validator {
+        // انتخاب تصادفی مبتنی بر سهام
+        const totalStake = Array.from(this.validators.values())
+            .reduce((acc, v) => acc + v.stake, 0);
+        
+        let rand = Math.random() * totalStake;
+        for (const [address, validator] of this.validators) {
+            if (rand < validator.stake) return validator;
+            rand -= validator.stake;
+        }
+        return this.validators.values().next().value;
+    }
+
+    async validateBlock(block: Block): Promise<boolean> {
+        // بررسی امضا
+        const validator = this.validators.get(block.proposer);
+        if (!validator) return false;
+
+        const isValid = await this.verifySignature(block, validator);
+        if (!isValid) return false;
+
+        // بررسی تعداد رأی‌ها
+        const votes = await this.collectVotes(block);
+        const requiredVotes = Math.ceil(this.validators.size * 0.667); // 2/3
+
+        return votes >= requiredVotes;
+    }
+
+    private async collectVotes(block: Block): Promise<number> {
+        // شبیه‌سازی جمع‌آوری رأی از اعتبارسنج‌ها
+        let votes = 0;
+        for (const validator of this.validators.values()) {
+            if (Math.random() < 0.9) votes++; // 90% مشارکت
+        }
+        return votes;
+    }
+}
+
+interface Validator {
+    address: string;
+    stake: number;
+    publicKey: string;
+    isActive: boolean;
+}
+
+interface Block {
+    number: number;
+    timestamp: number;
+    proposer: string;
+    transactions: Transaction[];
+    parentHash: string;
+    signature: string;
+}
+
+interface Transaction {
+    from: string;
+    to: string;
+    value: number;
+    data?: string;
+    signature: string;
+}
+
+interface ConsensusConfig {
+    initialValidators: Validator[];
+    minStake: number;
+    blockTime: number;
+}
