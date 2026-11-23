@@ -1,4 +1,4 @@
-🚀 بسته کامل پروژه ETHVM-APZ-CHAIN-COMPLET
+-gitea.sh🚀 بسته کامل پروژه ETHVM-APZ-CHAIN-COMPLET
 
 ---
 
