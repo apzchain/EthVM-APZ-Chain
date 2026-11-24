@@ -1,0 +1,21 @@
+[
+  "tests/test_api.py::test_consensus_status_requires_auth",
+  "tests/test_api.py::test_dashboard_requires_auth",
+  "tests/test_api.py::test_health",
+  "tests/test_api.py::test_invalid_login",
+  "tests/test_api.py::test_login_and_dashboard",
+  "tests/test_api.py::test_readiness_fails_when_execution_client_unavailable",
+  "tests/test_api.py::test_rpc_read_forwards_allowlisted_method",
+  "tests/test_api.py::test_rpc_read_rejects_write_methods",
+  "tests/test_api.py::test_rpc_read_requires_auth",
+  "tests/test_consensus.py::test_consensus_beacon_api_status",
+  "tests/test_consensus.py::test_consensus_not_configured",
+  "tests/test_network_preflight.py::test_preflight_accepts_complete_operator_supplied_artifacts",
+  "tests/test_network_preflight.py::test_preflight_rejects_consensus_genesis_checksum_mismatch",
+  "tests/test_network_preflight.py::test_preflight_rejects_genesis_chain_id_mismatch",
+  "tests/test_rpc_adapter.py::test_node_status_does_not_verify_identity_on_genesis_mismatch",
+  "tests/test_rpc_adapter.py::test_node_status_verifies_official_identity_only_when_all_values_match",
+  "tests/test_rpc_adapter.py::test_rpc_rejects_invalid_envelope",
+  "tests/test_rpc_adapter.py::test_rpc_returns_result",
+  "tests/test_rpc_adapter.py::test_rpc_surfaces_rpc_error_safely"
+]
